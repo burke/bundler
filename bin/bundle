@@ -17,4 +17,10 @@ end
 require 'bundler/cli'
 
 require 'bundler/friendly_errors'
+
+if File.exist?("Gemfile") && File.read("Gemfile") =~ /^\s*source.*shopify/
+  require 'bundler/source/rubygems'
+  Bundler::Source::Rubygems::API_REQUEST_LIMIT = 8000
+end
+
 Bundler.with_friendly_errors { Bundler::CLI.start(ARGV, :debug => true) }
